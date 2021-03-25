@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.security.user;
 
 import java.util.Arrays;
 import java.util.Collection;

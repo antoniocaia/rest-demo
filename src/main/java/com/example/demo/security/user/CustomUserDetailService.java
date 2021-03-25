@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.security.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service("userDetailService")
-public class UserService implements UserDetailsService{
+// 'UserDetailsService' is used by Spring to retrieve users informations.
+// it define a method 'loadUserByUsername()' that we override to customize the
+// process to retrieve the users
+@Service
+public class CustomUserDetailService implements UserDetailsService{
 	
 	@Autowired
 	private UserRepository userRepository;

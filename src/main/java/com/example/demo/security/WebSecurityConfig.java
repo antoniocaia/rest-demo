@@ -24,17 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//@formatter:on
 	}
 	
-	// 'UserDetailsService' is used by Spring to retrieve users informations.
-	// it define a method 'loadUserByUsername()' that we override to customize the process to retrieve the users
-	/*
-	@Bean("userDatailService")
-	public UserDetailsService userDetailsService() {
-		return new UserService();
-	}
-	*/
-	
-	// We need to specify the hashing alghoritm for the passwords
-	// For now I'm using default spring alghoritm
+	// We need to specify the hashing algorithm for the passwords
+	// For now I'm using default spring algorithm
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
