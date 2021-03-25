@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.employee.Employee;
+
 @Configuration
 public class LoadResourcesOrders {
 
@@ -19,8 +21,10 @@ public class LoadResourcesOrders {
 	// 3- The Bean will be executed "automatically" after the application start 
 	CommandLineRunner initDatabaseOrder(OrderRepository orderRepository) { 
 		return args -> {
-			log.info("Preloading " + orderRepository.save(new Order("MacBook", Status.IN_PROGRESS)));
-			log.info("Preloading " + orderRepository.save(new Order("Tech", Status.COMPLETED)));
+			log.info("Preloading " + orderRepository.save(
+					new Order("MacBook", Status.IN_PROGRESS, new Employee(1, "", ""))));
+			log.info("Preloading " + orderRepository.save(
+					new Order("Tech", Status.COMPLETED, new Employee(1, "", ""))));
 		};
 	}
 }

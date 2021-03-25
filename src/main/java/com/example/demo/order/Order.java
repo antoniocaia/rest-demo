@@ -5,22 +5,30 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.example.demo.employee.Employee;
 
 // Javax annotation
 @Entity @Table(name = "CUSTOMER_ORDER")
-class Order {
+public class Order {
 
 	private @Id @GeneratedValue Long id;
 
 	private String description;
 	private Status status;
+	
+	@ManyToOne
+	private Employee employee;
 
 	Order() {}
-
-	Order(String description, Status status) {
+	
+	// Used only to preload
+	Order(String description, Status status, Employee employee) {
 		this.description = description;
 		this.status = status;
+		this.employee = employee;
 	}
 
 	public Long getId() {
@@ -47,6 +55,14 @@ class Order {
 		this.status = status;
 	}
 
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 
@@ -65,6 +81,6 @@ class Order {
 
 	@Override
 	public String toString() {
-		return "Order{" + "id=" + this.id + ", description='" + this.description + '\'' + ", status=" + this.status + '}';
+		return "Order{" + "id=" + this.id + ", description='" + this.description + '\'' + ", status=" + this.status + ", EmployeeId=" + this.employee.getId() + '}';
 	}
 }

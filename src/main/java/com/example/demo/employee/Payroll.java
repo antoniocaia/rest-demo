@@ -1,8 +1,7 @@
 package com.example.demo.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 // JpaRepository extends CrudRepository
-// @Repository not needed?
+// @Repository not needed? SpringBoot automatically detect it because we are extending JpaRepository
 interface EmployeeRepository extends JpaRepository<Employee, Long> {}

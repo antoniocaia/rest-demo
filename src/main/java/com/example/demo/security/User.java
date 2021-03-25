@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.security;
 
 import java.util.Objects;
 
@@ -11,12 +11,14 @@ public class User {
 	private @Id @GeneratedValue Long id;
 	private String username;
 	private String password;
+	private String role;
 	
 	User() { }
 	
-	User(String username, String password) {
+	User(String username, String password, String role) {
 		this.username = username;
 		this.password = password;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -43,6 +45,14 @@ public class User {
 		this.password = password;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -61,7 +71,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "Employee{" + "id=" + this.id + ", name='" + this.username + '\'' + ", role='" + this.password + '\''
-				+ '}';
+		return "User{" + "id=" + this.id + ", name='" + this.username + '\'' + ", password='" + this.password + '\''
+				+ ", auth=" + role + '}';
 	}
 }

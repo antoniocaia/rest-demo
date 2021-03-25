@@ -8,19 +8,31 @@ import javax.persistence.Id;
 
 // Javax annotation
 @Entity
-class Employee {
+public class Employee {
 	// Javax annotation
 	private @Id @GeneratedValue Long id;
 	private String name;
 	private String role;
-
-	Employee() {
-	}
-
-	Employee(String name, String role) {
-
+	// @OneToMany should always used with 'mappedBy' to avoid inconsistency. 
+	// Furthermore, the "many" entity ('Order' class) should have a @ManyToOne annotation without 'mappedBy'
+	// https://www.baeldung.com/hibernate-one-to-many
+	
+	public Employee() {}
+	
+	// Only used to preload
+	public Employee(String name, String role) {
 		this.name = name;
 		this.role = role;
+	}
+	// Only used to preload
+	public Employee(long id, String name, String role) {
+		this.id = id;
+		this.name = name;
+		this.role = role;
+	}
+	
+	public Employee(Long id) {
+		this.id = id;
 	}
 
 	public Long getId() {
