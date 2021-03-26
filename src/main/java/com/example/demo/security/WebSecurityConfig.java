@@ -1,5 +1,7 @@
 package com.example.demo.security;
 
+import java.security.SecureRandom;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,13 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
+	private final int encodeStrenght = 15; // Default value is 10
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http.authorizeRequests()
-			.antMatchers("/users/*").hasAuthority("ROLE_ADMIN")
-			.antMatchers("/employees/**").hasAuthority("ROLE_USER")
+			.antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/employees/**", "/orders/**").hasAuthority("ROLE_USER")
 			.anyRequest().authenticated()
 			.and().formLogin()
 			.and().httpBasic(); 
@@ -25,9 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	// We need to specify the hashing algorithm for the passwords
-	// For now I'm using default spring algorithm
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+		// We specify the algorithm "strength" (that result in 2^strength iterations) and the salting function
+		// https://docs.oracle.com/javase/6/docs/api/java/security/SecureRandom.html
+		return new BCryptPasswordEncoder(encodeStrenght, new SecureRandom());
 	}
 }
