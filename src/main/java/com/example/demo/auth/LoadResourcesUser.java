@@ -1,4 +1,4 @@
-package com.example.demo.security.user;
+package com.example.demo.auth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

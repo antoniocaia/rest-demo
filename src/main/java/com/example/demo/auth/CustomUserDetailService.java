@@ -1,4 +1,4 @@
-package com.example.demo.security.user;
+package com.example.demo.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
