@@ -72,6 +72,13 @@ class OrderController {
 		return assembler.toModel(order);
 	}
 	
+	// This one is mostly an utility
+	@GetMapping("/orders/{id}")
+	EntityModel<Order> oneDirect(@PathVariable Long id) {
+		Order order = orderService.getOrder(id);
+		return assembler.toModel(order);
+	}
+	
 	@PutMapping("/orders/{id}/complete")
 	ResponseEntity<?> complete(@PathVariable Long id) {
 		Order order = orderService.getOrder(id);
