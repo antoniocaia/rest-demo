@@ -1,0 +1,26 @@
+<div style="text-align:center">
+	<h1>
+		Test {{ title }}
+	</h1>
+</div>
+
+<!--
+	From Angular https://angular.io/guide/router#route-order
+	"The order of routes is important because the Router uses a first-match wins strategy when 
+	matching routes, so more specific routes should be placed above less specific routes.
+	List routes with a static path first, followed by an empty path route, which matches the
+	default route. The wildcard route comes last because it matches every URL and the Router 
+	selects it only if no other routes match first."
+-->
+
+<div class="container">
+	<ul class="nav nav-pills">
+		<li><a routerLinkActive="active" routerLink="/home">Home</a></li>
+		<li><a routerLinkActive="active" routerLink="/employees">Employees List</a></li>
+		<li><a routerLinkActive="active" routerLink="/employee">Single employee</a></li>
+	</ul>
+</div>
+
+<div class="container">
+	<router-outlet></router-outlet>
+</div>
