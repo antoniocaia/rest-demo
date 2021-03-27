@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class UserController {
 	
@@ -26,6 +25,6 @@ public class UserController {
 	// Only for test
 	@GetMapping("/users/{id}")
 	User one(@PathVariable Long id) {
-		return userRepository.findById(id).orElseThrow(); // Add custom exception
+		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)); 
 	}
 }
