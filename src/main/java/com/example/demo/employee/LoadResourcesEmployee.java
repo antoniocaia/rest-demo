@@ -11,7 +11,7 @@ public class LoadResourcesEmployee {
 	private static final Logger log = LoggerFactory.getLogger(LoadResourcesEmployee.class);
 
 	// Indicates that a method produces a bean to be managed by the Spring container
-	//@Bean // COMMENT BEAN IF YOU DON'T WANT TO POPULATE THE DB
+	// @Bean // COMMENT BEAN IF YOU DON'T WANT TO POPULATE THE DB
 	// CommandLineRunner is an functional interface used to indicate that a bean should run.
 	// 1- @Bean annotation means that a Bean will be generated
 	// 2- The Bean will be of type 'CommandLineRunner', so a functional interface. 
@@ -20,6 +20,7 @@ public class LoadResourcesEmployee {
 		return args -> {
 			log.info("Preloading " + employeeRepository.save(new Employee("Bilbo Baggins", "burglar")));
 			log.info("Preloading " + employeeRepository.save(new Employee("Frodo Baggins", "thief")));
+			log.info("Preloading " + employeeRepository.save(new Employee("Gandalf the Grey", "wizard")));
 		};
 	}
 }

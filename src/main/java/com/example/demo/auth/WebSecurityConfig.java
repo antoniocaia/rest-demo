@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	private final int encodeStrenght = 15; // Default value is 10
+	private final int encodeStrenght = 10; // Default value is 10
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
