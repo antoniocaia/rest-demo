@@ -34,6 +34,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- JUnit --> <!-- Non era incluso con Mockito in spring boot starter test? -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- MySQL -->
 		<dependency>
@@ -42,14 +49,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Hibernate H2 - NOT IN USE -->
-		<!-- 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency> 
-		-->
+		<!-- Hibernate H2 -->
+		<!-- <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> <scope>runtime</scope> </dependency> -->
 
 		<!-- Hateoas let you build JSon with links -->
 		<dependency>
