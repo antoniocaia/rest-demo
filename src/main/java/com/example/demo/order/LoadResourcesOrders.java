@@ -21,13 +21,13 @@ public class LoadResourcesOrders {
 	CommandLineRunner initDatabaseOrder(OrderRepository orderRepository) { 
 		return args -> {
 			log.info("Preloading " + orderRepository.save(
-					new Order("The Ring", Status.IN_PROGRESS, new Employee(4, "", ""))));
+					new Order("The Ring", Status.IN_PROGRESS, new Employee(4L, "", ""))));
 			log.info("Preloading " + orderRepository.save(
-					new Order("Magic Staff", Status.COMPLETED, new Employee(5, "", ""))));
+					new Order("Magic Staff", Status.COMPLETED, new Employee(5L, "", ""))));
 			log.info("Preloading " + orderRepository.save(
-					new Order("Stuff", Status.COMPLETED, new Employee(3, "", ""))));
+					new Order("Stuff", Status.COMPLETED, new Employee(3L, "", ""))));
 			log.info("Preloading " + orderRepository.save(
-					new Order("Hat", Status.COMPLETED, new Employee(3, "", ""))));
+					new Order("Hat", Status.COMPLETED, new Employee(3L, "", ""))));
 		};
 	}
 }
