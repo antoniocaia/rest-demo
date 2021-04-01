@@ -1,4 +1,4 @@
-package com.example.demo.order;
+package com.example.demo.controller;
 
 //Needed for 'methodOn' and 'linkTo'
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -23,10 +23,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.employee.Employee;
+import com.example.demo.assembler.OrderModelAssembler;
+import com.example.demo.model.Employee;
+import com.example.demo.model.Order;
+import com.example.demo.model.Status;
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.service.OrderService;
 
 @RestController
-class OrderController {
+public class OrderController {
 
 	private final OrderRepository orderRepository;
 	private final OrderService orderService;
@@ -39,16 +44,16 @@ class OrderController {
 	}
 
 	@GetMapping("/orders")
-	CollectionModel<EntityModel<Order>> all() {
+	public CollectionModel<EntityModel<Order>> getAllOrders() {
 		List<EntityModel<Order>> orders = orderService.getAllOrders().stream()
 			.map(assembler::toModel)
 			.collect(Collectors.toList());
-
-		return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
+		
+		return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).getAllOrders()).withSelfRel());
 	}
 	
 	@PostMapping("employees/{id}/orders")
-	ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order, @PathVariable Long id) {
+	public ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order, @PathVariable Long id) {
 		order.setStatus(Status.IN_PROGRESS);
 		order.setEmployee(new Employee(id));
 		EntityModel<Order> entityModel = assembler.toModel(orderService.saveOrder(order));
@@ -59,28 +64,27 @@ class OrderController {
 	}
 	
 	@GetMapping("/employees/{id}/orders")
-	CollectionModel<EntityModel<Order>> getAllOrderByEmployee(@PathVariable long id){
+	public CollectionModel<EntityModel<Order>> getAllOrderByEmployee(@PathVariable long id){
 		List<EntityModel<Order>>  orders = orderService.getOrdersByEmployee(id).stream()
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
-		return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
+		return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).getAllOrders()).withSelfRel());
 	}
 	
 	@GetMapping("/employees/{empId}/orders/{id}")
-	EntityModel<Order> one(@PathVariable Long id) {
+	public	EntityModel<Order> getOrderById(@PathVariable Long id) {
 		Order order = orderService.getOrder(id);
 		return assembler.toModel(order);
 	}
 	
-	// This one is mostly an utility
 	@GetMapping("/orders/{id}")
-	EntityModel<Order> oneDirect(@PathVariable Long id) {
+	public EntityModel<Order> getEmployeeDirect(@PathVariable Long id) {
 		Order order = orderService.getOrder(id);
 		return assembler.toModel(order);
 	}
 	
 	@PutMapping("/orders/{id}/complete")
-	ResponseEntity<?> complete(@PathVariable Long id) {
+	public ResponseEntity<?> completeOrder(@PathVariable Long id) {
 		Order order = orderService.getOrder(id);
 		
 		// You can "complete" an Order only if its precedent status was IN_PROGRESS
@@ -101,7 +105,7 @@ class OrderController {
 	}
 	
 	@DeleteMapping("/orders/{id}/cancel")
-	ResponseEntity<?> cancel(@PathVariable Long id) {
+	public 	ResponseEntity<?> cancelOrder(@PathVariable Long id) {
 		Order order = orderService.getOrder(id);
 
 		if (order.getStatus() == Status.IN_PROGRESS) {
@@ -116,6 +120,4 @@ class OrderController {
 				.withTitle("Method not allowed") 
 				.withDetail("You can't cancel an order that is in the " + order.getStatus() + " status"));
 	}
-
-
 }

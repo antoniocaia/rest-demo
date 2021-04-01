@@ -1,4 +1,4 @@
-package com.example.demo.employee;
+package com.example.demo.controller;
 
 // Needed for 'methodOn'
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -19,61 +19,66 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.assembler.EmployeeModelAssembler;
+import com.example.demo.model.Employee;
+import com.example.demo.service.EmployeeService;
+
 // @RestController is a short version for @Controller and @ResponseBody
 // @Controller is a specialization of @Component (a class candidate for auto-detection when using annotation-based configuration and classpath scanning)
 // Controller is used to tell Spring (?) that the annotated class contains method mapped to specific URI (using  @RequestMapping or @GetMapping, @PostMapping, etc)
 // @ResponseBody indicates that the data returned by each method will be written straight into the response body instead of rendering a template
 @RestController
-class EmployeeController {
-
-	  private final EmployeeService service;
-	  private final EmployeeModelAssembler assembler;
-	  
-	  // "As of Spring Framework 4.3, an @Autowired annotation on such a constructor is no longer necessary if the target bean only defines one constructor to begin with"
-	  // @Autowired
-	  EmployeeController(EmployeeService service, EmployeeModelAssembler assembler) {
-		  this.service = service;
-		  this.assembler = assembler;
-	  }
+public class EmployeeController {
 	
-	// CollectionModel<EntityModel<T>> is a container of EntityModel<T> used by HATEOAS
-	@GetMapping("/employees")
-	CollectionModel<EntityModel<Employee>> all() {
-		List<EntityModel<Employee>> employees = service.getAllEmployees().stream()
-			.map(assembler::toModel)
-			.collect(Collectors.toList());
+	// I can remove the constructor and annotate this variable with @Autowired.
+	// But during unit testing it's useful to have a constructor to manually inject mocked dependencies. Wtd?
+	private final EmployeeService service;
+	private final EmployeeModelAssembler assembler;
 
-		return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
+	// "As of Spring Framework 4.3, an @Autowired annotation on such a constructor is no longer necessary 
+	// if the target bean only defines one constructor to begin with"
+	// @Autowired
+	public EmployeeController(EmployeeService service, EmployeeModelAssembler assembler) {
+		this.service = service;
+		this.assembler = assembler;
 	}
 
-	@PostMapping("/employees")
+	// CollectionModel<EntityModel<T>> is a container of EntityModel<T> used by HATEOAS
+	@GetMapping("/employees")
+	public CollectionModel<EntityModel<Employee>> getAllEmployees() {
+		List<EntityModel<Employee>> employees = service.getAllEmployees().stream().map(assembler::toModel)
+				.collect(Collectors.toList());
+
+		return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).getAllEmployees()).withSelfRel());
+	}
+	
 	// ResponseEntity<T> is used to represent an HTTP response
-	ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+	@PostMapping("/employees")
+	public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
 		EntityModel<Employee> entityModel = assembler.toModel(service.saveEmployee(newEmployee));
 		// '.created()' generate a "HTTP 201 Created" status. 'created' expect the location of the new instance as a parameter
 		// To get the URI, we use the link stored in the EntityModel under the reference 'self'
-		return ResponseEntity
-			.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())		// code + location
-			.body(entityModel);														// body of the HTTP response
+		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) // code + location
+				.body(entityModel); // body of the HTTP response
 	}
 	
-	@GetMapping("/employees/{id}")
 	// EntityModel<T> is a generic container from Spring HATEOAS that includes not only the data but a collection of links
-	EntityModel<Employee> one(@PathVariable Long id) {
+	@GetMapping("/employees/{id}")
+	public EntityModel<Employee> getEmployeeById(@PathVariable Long id) {
 		Employee employee = service.getEmployee(id);
 		return assembler.toModel(employee);
 	}
 
 	@PutMapping("/employees/{id}")
-	Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+	public Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 		return service.updateEmployee(newEmployee, id);
 	}
-	
+
 	// @PathVariable bound the parameter 'Long id' to the URI template whit the SAME NAME
 	// So if the URI is "/employees/{paperino}", we have to pass to the method the parameter '@PathVariable Long paperino'
 	@DeleteMapping("/employees/{id}")
-	ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+	public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 		service.deleteEmployee(id);
-		return ResponseEntity.noContent().build();	// noContent correspond to a "HTTP 204 No Content" status
+		return ResponseEntity.noContent().build(); // noContent correspond to a "HTTP 204 No Content" status
 	}
 }

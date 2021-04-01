@@ -1,10 +1,12 @@
-package com.example.demo.auth;
+package com.example.demo.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface UserRepository extends JpaRepository<User, Long> {
+import com.example.demo.model.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	public Optional<User> findByUsername(String name);
 }

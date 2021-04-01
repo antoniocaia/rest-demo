@@ -1,4 +1,4 @@
-package com.example.demo.auth;
+package com.example.demo.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.example.demo.model.User;
 
 @Configuration
 public class LoadResourcesUser {

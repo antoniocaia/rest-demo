@@ -1,9 +1,11 @@
-package com.example.demo.employee;
+package com.example.demo.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+
+import com.example.demo.model.Employee;
 
 @Configuration
 public class LoadResourcesEmployee {

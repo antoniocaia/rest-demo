@@ -11,9 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // https://www.marcobehler.com/guides/spring-security#_authentication_with_spring_security
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	private final int encodeStrenght = 10; // Default value is 10
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().httpBasic(); 
 		//@formatter:on
 	}
-	
+
 	// We need to specify the hashing algorithm for the passwords
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

@@ -1,11 +1,13 @@
-package com.example.demo.order;
+package com.example.demo.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.demo.employee.Employee;
+import com.example.demo.model.Employee;
+import com.example.demo.model.Order;
+import com.example.demo.model.Status;
 
 @Configuration
 public class LoadResourcesOrders {

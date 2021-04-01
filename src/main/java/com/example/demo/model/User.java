@@ -1,4 +1,4 @@
-package com.example.demo.auth;
+package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 	private String password;
 	private String role;
 	
-	User(String username, String password, String role) {
+	public User(String username, String password, String role) {
 		this.username = username;
 		this.password = password;
 		this.role = role;

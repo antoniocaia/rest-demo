@@ -1,8 +1,12 @@
-package com.example.demo.employee;
+package com.example.demo.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.example.demo.exception.EmployeeNotFoundException;
+import com.example.demo.model.Employee;
+import com.example.demo.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
@@ -36,7 +40,7 @@ public class EmployeeService {
 		});
 	}
 
-	void deleteEmployee(long id) {
+	public void deleteEmployee(long id) {
 		repository.delete(repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id)));
 	}
 }

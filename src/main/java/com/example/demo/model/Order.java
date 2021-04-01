@@ -1,12 +1,10 @@
-package com.example.demo.order;
+package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.example.demo.employee.Employee;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +21,7 @@ import lombok.NoArgsConstructor;
 	private Employee employee;
 
 	// Used only to preload
-	Order(String description, Status status, Employee employee) {
+	public Order(String description, Status status, Employee employee) {
 		this.description = description;
 		this.status = status;
 		this.employee = employee;

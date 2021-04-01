@@ -1,9 +1,12 @@
-package com.example.demo.order;
+package com.example.demo.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.OrderNotFoundException;
+import com.example.demo.model.Order;
+import com.example.demo.repository.OrderRepository;
 
 @Service
 public class OrderService {
