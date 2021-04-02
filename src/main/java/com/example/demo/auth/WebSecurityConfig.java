@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private final int encodeStrenght = 10; // Default value is 10
+	private static final int BCP_STRENGTH = 10; // Default value is 10
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -31,6 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		// We specify the algorithm "strength" (that result in 2^strength iterations) and the salting function
 		// https://docs.oracle.com/javase/6/docs/api/java/security/SecureRandom.html
-		return new BCryptPasswordEncoder(encodeStrenght, new SecureRandom());
+		return new BCryptPasswordEncoder(BCP_STRENGTH, new SecureRandom());
 	}
 }
