@@ -33,7 +33,7 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.OrderService;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class OrderController {
 
 	private final OrderService orderService;

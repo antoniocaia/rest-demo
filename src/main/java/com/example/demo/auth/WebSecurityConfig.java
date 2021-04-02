@@ -18,8 +18,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http.authorizeRequests()
-			.antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
-			.antMatchers("/employees/**", "/orders/**").hasAuthority("ROLE_USER")
+			.antMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/api/v1/employees/**", "/api/v1/orders/**").hasAuthority("ROLE_USER")
 			.anyRequest().authenticated()
 			.and().formLogin()
 			.and().httpBasic(); 
