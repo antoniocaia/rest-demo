@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.assembler.EmployeeModelAssembler;
@@ -30,6 +31,7 @@ import com.example.demo.service.EmployeeService;
 // Controller is used to tell Spring (?) that the annotated class contains method mapped to specific URI (using  @RequestMapping or @GetMapping, @PostMapping, etc)
 // @ResponseBody indicates that the data returned by each method will be written straight into the response body instead of rendering a template
 @RestController
+@RequestMapping("/api/v1/employees/")
 public class EmployeeController {
 	
 	// I can remove the constructor and annotate this variable with @Autowired.
@@ -46,7 +48,7 @@ public class EmployeeController {
 	}
 
 	// CollectionModel<EntityModel<T>> is a container of EntityModel<T> used by HATEOAS
-	@GetMapping("/employees")
+	@GetMapping("/")
 	public CollectionModel<EntityModel<Employee>> getAllEmployees() {
 		List<EntityModel<Employee>> employees = employeeService.findAll().stream()
 				.map(assembler::toModel)
@@ -56,7 +58,7 @@ public class EmployeeController {
 	}
 	
 	// ResponseEntity<T> is used to represent an HTTP response
-	@PostMapping("/employees")
+	@PostMapping("/")
 	public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
 		EntityModel<Employee> entityModel = assembler.toModel(employeeService.save(newEmployee));
 		// '.created()' generate a "HTTP 201 Created" status. 'created' expect the location of the new instance as a parameter
@@ -66,20 +68,20 @@ public class EmployeeController {
 	}
 	
 	// EntityModel<T> is a generic container from Spring HATEOAS that includes not only the data but a collection of links
-	@GetMapping("/employees/{id}")
+	@GetMapping("/{id}")
 	public EntityModel<Employee> getEmployeeById(@PathVariable Long id) {
 		Employee employee = employeeService.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
 		return assembler.toModel(employee);
 	}
 
-	@PutMapping("/employees/{id}")
+	@PutMapping("/{id}")
 	public Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 		return employeeService.update(newEmployee, id);
 	}
 
 	// @PathVariable bound the parameter 'Long id' to the URI template whit the SAME NAME
 	// So if the URI is "/employees/{paperino}", we have to pass to the method the parameter '@PathVariable Long paperino'
-	@DeleteMapping("/employees/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 		employeeService.deleteById(id);
 		return ResponseEntity.noContent().build(); // noContent correspond to a "HTTP 204 No Content" status
