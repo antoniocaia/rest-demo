@@ -11,6 +11,6 @@ public class UserService extends BaseCrudService<UserRepository, User, Long> {
 
 	@Autowired
 	public UserService(UserRepository repository) {
-		this.repository = repository;
+		super(repository);
 	}
 }

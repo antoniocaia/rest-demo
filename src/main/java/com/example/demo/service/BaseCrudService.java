@@ -5,9 +5,16 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract class BaseCrudService<REPO extends JpaRepository<MODEL, ID>, MODEL, ID> implements ICrudService<MODEL, ID> {
+import com.example.demo.exception.EmployeeNotFoundException;
+import com.example.demo.model.IDModel;
+
+public abstract class BaseCrudService<REPO extends JpaRepository<MODEL, ID>, MODEL extends IDModel<ID>, ID> implements ICrudService<MODEL, ID> {
 
 	protected REPO repository;
+	
+	public BaseCrudService(REPO repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	public Optional<MODEL> findById(ID id) {
@@ -37,5 +44,13 @@ public abstract class BaseCrudService<REPO extends JpaRepository<MODEL, ID>, MOD
 	@Override
 	public MODEL update(MODEL model) {
 		return repository.save(model);
+	}
+	
+	@Override
+	public MODEL update(MODEL model, ID id) {
+		repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+		model.setId(id);
+		return repository.save(model);
+		
 	}
 }

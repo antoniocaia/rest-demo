@@ -16,4 +16,6 @@ public interface ICrudService<MODEL, ID> {
 	void deleteById(ID id);
 
 	MODEL update(MODEL model);
+
+	MODEL update(MODEL model, ID id);
 }

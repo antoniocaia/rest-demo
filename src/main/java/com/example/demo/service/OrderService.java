@@ -13,7 +13,7 @@ public class OrderService extends BaseCrudService<OrderRepository, Order, Long> 
 
 	@Autowired
 	public OrderService(OrderRepository repository) {
-		this.repository = repository;
+		super(repository);
 	}
 	
 	public List<Order> findByEmployeeId(Long id) {
