@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 
 @RestController
 public class UserController {
 
 	// I should probably add a service layer
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@PostMapping("/users")
 	User newUser(@RequestBody User newUser) {
 		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-		return userRepository.save(newUser);
+		return userService.save(newUser);
 	}
 
 	@GetMapping("/users")
 	List<User> getAllUsers() {
-		return userRepository.findAll();
+		return userService.findAll();
 	}
 
 	@GetMapping("/users/{id}")
 	User getUserById(@PathVariable Long id) {
-		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+		return userService.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 	}
 }

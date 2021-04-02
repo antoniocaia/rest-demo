@@ -16,7 +16,7 @@ public class OrderService extends BaseCrudService<OrderRepository, Order, Long> 
 		this.repository = repository;
 	}
 	
-	public List<Order> findByEmployeeID(Long id) {
+	public List<Order> findByEmployeeId(Long id) {
 		return repository.findByEmployeeId(id);
 	}
 }
