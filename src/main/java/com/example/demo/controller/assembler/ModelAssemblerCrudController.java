@@ -6,6 +6,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.demo.exception.EmployeeNotFoundException;
 import com.example.demo.model.IDModel;
 import com.example.demo.service.BaseCrudService;
 
@@ -33,14 +34,7 @@ public abstract class ModelAssemblerCrudController<SERVICE extends BaseCrudServi
 		this.service = service;
 		this.assembler = assembler;
 	}
-	
-	@GetMapping("/x")
-	public EntityModel<MODEL> x() { 
-		List<MODEL> m = service.findAll();
-		EntityModel<MODEL> a = assembler.toModel(m.get(0));
-		return a;
-	}
-	
+		
 	// CollectionModel<EntityModel<T>> is a container of EntityModel<T> used by HATEOAS
 	@Override
 	@GetMapping("/")
@@ -53,7 +47,7 @@ public abstract class ModelAssemblerCrudController<SERVICE extends BaseCrudServi
 	@Override
 	@GetMapping("/{id}")
 	public EntityModel<MODEL> getById(@PathVariable ID id) {
-		return assembler.toModel(service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id)));
+		return assembler.toModel(service.findById(id).orElseThrow(() -> new EntityNotFoundException()));
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.exception.EmployeeNotFoundException;
 import com.example.demo.model.IDModel;
 
 public abstract class BaseCrudService<REPO extends JpaRepository<MODEL, ID>, MODEL extends IDModel<ID>, ID> implements ICrudService<MODEL, ID> {
@@ -48,7 +47,7 @@ public abstract class BaseCrudService<REPO extends JpaRepository<MODEL, ID>, MOD
 	
 	@Override
 	public MODEL update(MODEL model, ID id) {
-		repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+		repository.findById(id);
 		model.setId(id);
 		return repository.save(model);
 		

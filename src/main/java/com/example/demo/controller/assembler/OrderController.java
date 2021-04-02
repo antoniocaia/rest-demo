@@ -57,13 +57,13 @@ public class OrderController extends ModelAssemblerCrudController<OrderService, 
 		return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).getAll()).withSelfRel());
 	}
 
-	@GetMapping("/employees/{empId}/orders/{id}")
+	@GetMapping("/employees/{empId}/{id}")
 	public EntityModel<Order> getOrderById(@PathVariable Long id) {
 		Order order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
 		return assembler.toModel(order);
 	}
 
-	@PutMapping("/orders/{id}/complete")
+	@PutMapping("/{id}/complete")
 	public ResponseEntity<?> completeOrder(@PathVariable Long id) {
 		Order order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
 
@@ -82,7 +82,7 @@ public class OrderController extends ModelAssemblerCrudController<OrderService, 
 						.withDetail("You can't complete an order that is in the " + order.getStatus() + " status"));
 	}
 
-	@DeleteMapping("/orders/{id}/cancel")
+	@DeleteMapping("/{id}/cancel")
 	public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
 		Order order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
 
