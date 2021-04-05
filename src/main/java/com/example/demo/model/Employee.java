@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +24,7 @@ public class Employee extends IDModel<Long> {
 	// @OneToMany should always used with 'mappedBy' to avoid inconsistency.
 	// Furthermore, the "many" entity ('Order' class) should have a @ManyToOne annotation without 'mappedBy'
 	// https://www.baeldung.com/hibernate-one-to-many
+	@JsonIgnore
 	@OneToMany(mappedBy = "employee")
 	private Set<CustomOrder> orders;
 

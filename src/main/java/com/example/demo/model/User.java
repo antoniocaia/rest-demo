@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +24,8 @@ public class User extends IDModel<Long>{
 	@Column(name = "PASSWORD")
 	private String password;
 	
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<Role> roles;
 	
 	public User(String username, String password, Set<Role> roles) {

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +22,7 @@ public class Role extends IDModel<Long>{
 	@Column(name = "DESCRIPTION")
 	private String description;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 	
