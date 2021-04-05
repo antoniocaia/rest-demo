@@ -25,47 +25,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.assembler.OrderModelAssembler;
+import com.example.demo.assembler.CustomOrderModelAssembler;
 import com.example.demo.exception.EmployeeNotFoundException;
 import com.example.demo.model.Employee;
-import com.example.demo.model.Order;
+import com.example.demo.model.CustomOrder;
 import com.example.demo.model.Status;
 import com.example.demo.service.OrderService;
 
 @RestController
 @RequestMapping("/api/v1/orders")
-public class OrderController extends ModelAssemblerCrudController<OrderService, OrderModelAssembler, Order, Long> {
+public class CustomOrderController extends ModelAssemblerCrudController<OrderService, CustomOrderModelAssembler, CustomOrder, Long> {
 
 	@Autowired
-	public OrderController(OrderService orderService, OrderModelAssembler assembler) {
-		super(orderService, assembler);
+	public CustomOrderController(OrderService customOrderService, CustomOrderModelAssembler assembler) {
+		super(customOrderService, assembler);
 	}
 
 	@PostMapping("/employees/{id}")
-	public ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order, @PathVariable Long id) {
-		order.setStatus(Status.IN_PROGRESS);
-		order.setEmployee(new Employee(id));
-		EntityModel<Order> entityModel = assembler.toModel(service.save(order));
+	public ResponseEntity<EntityModel<CustomOrder>> newOrder(@RequestBody CustomOrder customOrder, @PathVariable Long id) {
+		customOrder.setStatus(Status.IN_PROGRESS);
+		customOrder.setEmployee(new Employee(id));
+		EntityModel<CustomOrder> entityModel = assembler.toModel(service.save(customOrder));
 
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 
 	@GetMapping("/employees/{id}")
-	public CollectionModel<EntityModel<Order>> getAllOrderByEmployee(@PathVariable long id) {
-		List<EntityModel<Order>> orders = service.findByEmployeeId(id).stream().map(assembler::toModel)
+	public CollectionModel<EntityModel<CustomOrder>> getAllOrderByEmployee(@PathVariable long id) {
+		List<EntityModel<CustomOrder>> orders = service.findByEmployeeId(id).stream().map(assembler::toModel)
 				.collect(Collectors.toList());
-		return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).getAll()).withSelfRel());
+		return CollectionModel.of(orders, linkTo(methodOn(CustomOrderController.class).getAll()).withSelfRel());
 	}
 
 	@GetMapping("/employees/{empId}/{id}")
-	public EntityModel<Order> getOrderById(@PathVariable Long id) {
-		Order order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-		return assembler.toModel(order);
+	public EntityModel<CustomOrder> getOrderById(@PathVariable Long id) {
+		CustomOrder customOrder = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+		return assembler.toModel(customOrder);
 	}
 
 	@PutMapping("/{id}/complete")
 	public ResponseEntity<?> completeOrder(@PathVariable Long id) {
-		Order order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+		CustomOrder order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
 
 		// You can "complete" an Order only if its precedent status was IN_PROGRESS
 		// Check if the Order status is IN_PROGRESS, then return an OK response
@@ -84,16 +84,16 @@ public class OrderController extends ModelAssemblerCrudController<OrderService, 
 
 	@DeleteMapping("/{id}/cancel")
 	public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
-		Order order = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+		CustomOrder customOrder = service.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
 
-		if (order.getStatus() == Status.IN_PROGRESS) {
-			order.setStatus(Status.CANCELLED);
-			return ResponseEntity.ok(assembler.toModel(service.update(order)));
+		if (customOrder.getStatus() == Status.IN_PROGRESS) {
+			customOrder.setStatus(Status.CANCELLED);
+			return ResponseEntity.ok(assembler.toModel(service.update(customOrder)));
 		}
 
 		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
 				.header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
 				.body(Problem.create().withTitle("Method not allowed")
-						.withDetail("You can't cancel an order that is in the " + order.getStatus() + " status"));
+						.withDetail("You can't cancel an order that is in the " + customOrder.getStatus() + " status"));
 	}
 }

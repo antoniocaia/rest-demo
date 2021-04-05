@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.model.User;
 
-public class CustomUserDetails implements UserDetails {
+public class UserDetailsImp implements UserDetails {
 
 	private static final long serialVersionUID = -8227447482485524375L;
 	private User user;
 
-	public CustomUserDetails(User user) {
+	public UserDetailsImp(User user) {
 		this.user = user;
 	}
 

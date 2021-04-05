@@ -18,10 +18,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http.authorizeRequests()
-			.antMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN")
-			.antMatchers("/api/v1/employees/**", "/api/v1/orders/**").hasAuthority("ROLE_USER")
+			.antMatchers("/unprotectedUrl").permitAll() // URLs white-list, no authentication required
+			.antMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN")	// URLs that require role 'ADMIN' 
+			.antMatchers("/api/v1/employees/**", "/api/v1/orders/**").hasAuthority("ROLE_USER") // URLs that require role 'USER'
 			.anyRequest().authenticated()
-			.and().formLogin()
+			//.and().formLogin()	// Support for form login, generate one if not specified
 			.and().httpBasic(); 
 		//@formatter:on
 	}
