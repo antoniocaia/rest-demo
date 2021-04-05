@@ -1,6 +1,5 @@
 package com.example.demo.auth;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -21,8 +20,8 @@ public class UserDetailsImp implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Arrays.asList(user.getRole()).stream()
-				.map(role -> new SimpleGrantedAuthority(role))
+		return user.getRoles().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRole()))
 				.collect(Collectors.toList());
 	}
 

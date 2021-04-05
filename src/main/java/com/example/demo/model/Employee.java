@@ -18,7 +18,7 @@ public class Employee extends IDModel<Long> {
 	@Column(name = "NAME")
 	private String name;
 	@Column(name = "ROLE")
-	private String role;
+	private String job;
 	// @OneToMany should always used with 'mappedBy' to avoid inconsistency.
 	// Furthermore, the "many" entity ('Order' class) should have a @ManyToOne annotation without 'mappedBy'
 	// https://www.baeldung.com/hibernate-one-to-many
@@ -30,17 +30,15 @@ public class Employee extends IDModel<Long> {
 		setId(id);
 	}
 
-	// Only used in the loader
-	public Employee(String name, String role, Set<CustomOrder> set) {
+	public Employee(String name, String job, Set<CustomOrder> orders) {
 		super();
 		this.name = name;
-		this.role = role;
+		this.job = job;
+		this.orders = orders;
 	}
 
-	// Only used in the loader
-	public Employee(long id, String name, String role) {
-		this.id = id;
+	public Employee(String name, String job) {
 		this.name = name;
-		this.role = role;
+		this.job = job;
 	}
 }

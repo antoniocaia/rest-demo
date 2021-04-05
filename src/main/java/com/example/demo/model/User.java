@@ -1,7 +1,12 @@
 package com.example.demo.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -16,12 +21,14 @@ public class User extends IDModel<Long>{
 	private String username;
 	@Column(name = "PASSWORD")
 	private String password;
-	@Column(name = "ROLE")
-	private String role;
 	
-	public User(String username, String password, String role) {
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	private Set<Role> roles;
+	
+	public User(String username, String password, Set<Role> roles) {
+		super();
 		this.username = username;
 		this.password = password;
-		this.role = role;
+		this.roles = roles;
 	}
 }

@@ -29,4 +29,10 @@ public class CustomOrder extends IDModel<Long>{
 		this.status = status;
 		this.employee = employee;
 	}
+
+	public CustomOrder(String description, Status status) {
+		super();
+		this.description = description;
+		this.status = status;
+	}
 }
