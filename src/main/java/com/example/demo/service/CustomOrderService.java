@@ -9,10 +9,10 @@ import com.example.demo.model.CustomOrder;
 import com.example.demo.repository.OrderRepository;
 
 @Service
-public class OrderService extends BaseCrudService<OrderRepository, CustomOrder, Long> {
+public class CustomOrderService extends BaseCrudService<OrderRepository, CustomOrder, Long> {
 
 	@Autowired
-	public OrderService(OrderRepository repository) {
+	public CustomOrderService(OrderRepository repository) {
 		super(repository);
 	}
 	
