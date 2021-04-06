@@ -16,21 +16,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final int BCP_STRENGTH = 10; // Default value is 10
 	
 	// TODO: chiedere se è necessario distingure role e authorities quando UserDetail interpreta tutto come auth 
+	// Non è possibile fare distinzioni o usare combinazioni? A che serve
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
-		http.authorizeRequests()
+		http.csrf().disable()
+			.authorizeRequests()
 			.antMatchers("/unprotectedUrl").permitAll()	// URLs white-list, no authentication required
-			.antMatchers("/api/v1/users/**").hasRole("ADMIN") // URLs that require role 'ADMIN' 
-			.antMatchers("/api/v1/employees/**", "/api/v1/orders/**").hasAnyRole("USER", "WATCHER") // URLs that require role 'USER'
-			.antMatchers(HttpMethod.DELETE, "/api/v1/orders/**", "/api/v1/employees/**").hasAuthority("WRITE")
-			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**").hasAuthority("WRITE")
-			.antMatchers(HttpMethod.POST, "/api/v1/orders/**").hasAuthority("WRITE")
-			.antMatchers(HttpMethod.GET, "/api/v1/orders/**").hasAuthority("READ")
-			.anyRequest().authenticated()
-			.and().formLogin()	// Support for form login, generate one if not specified
-			.and().httpBasic(); 
+			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**", "/api/v1/employees/**").hasRole("USER")
+			.antMatchers(HttpMethod.POST, "/api/v1/orders/**", "/api/v1/employees/**").hasRole("USER")
+			.antMatchers(HttpMethod.DELETE,  "/api/v1/orders/**", "/api/v1/employees/**").hasRole("USER")
+			.antMatchers(HttpMethod.GET, "/api/v1/orders/**", "/api/v1/employees/**").hasAnyRole("USER", "WATCHER")
+			.antMatchers("/api/v1/users/**").hasRole("ADMIN")
+			.anyRequest().authenticated().and().httpBasic()
+			.and().formLogin();	// Support for form login, generate one if not specified 
 		//@formatter:on
 	}
 

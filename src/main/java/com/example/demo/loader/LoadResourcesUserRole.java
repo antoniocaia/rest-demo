@@ -47,10 +47,10 @@ public class LoadResourcesUserRole {
 			admin.getRoles().add(w);
 			admin.getRoles().add(r);
 			user.getRoles().add(ru);
-			admin.getRoles().add(w);
-			admin.getRoles().add(r);
+			user.getRoles().add(r);
+			user.getRoles().add(w);
 			watcher.getRoles().add(rw);
-			watcher.getRoles().add(w);
+			watcher.getRoles().add(r);
 			
 			
 			userRepository.save(admin);
