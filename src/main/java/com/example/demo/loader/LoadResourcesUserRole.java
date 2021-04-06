@@ -29,19 +29,33 @@ public class LoadResourcesUserRole {
 			
 			Role ra = new Role("ROLE_ADMIN", "Admin has permit over users", new HashSet<User>());
 			Role ru = new Role("ROLE_USER", "User has permit over orders and employees", new HashSet<User>());
-			
+			Role rw = new Role("ROLE_WATCHER", "Watcher... watchs", new HashSet<User>());
+			Role r = new Role("READ", "READ", new HashSet<User>());
+			Role w = new Role("WRITE", "WRITE", new HashSet<User>());
+					
 			roleRepository.save(ru);
 			roleRepository.save(ra);
+			roleRepository.save(rw);
+			roleRepository.save(r);
+			roleRepository.save(w);
 			
 			User admin = new User("admin", passwordEncoder.encode("password"), new HashSet<Role>());
 			User user = new User("user", passwordEncoder.encode("test"), new HashSet<Role>());
+			User watcher = new User("watch", passwordEncoder.encode("pass"), new HashSet<Role>());
 			
-			admin.getRoles().add(ru);
 			admin.getRoles().add(ra);
+			admin.getRoles().add(w);
+			admin.getRoles().add(r);
 			user.getRoles().add(ru);
+			admin.getRoles().add(w);
+			admin.getRoles().add(r);
+			watcher.getRoles().add(rw);
+			watcher.getRoles().add(w);
+			
 			
 			userRepository.save(admin);
 			userRepository.save(user);
+			userRepository.save(watcher);
 		};
 	}
 }

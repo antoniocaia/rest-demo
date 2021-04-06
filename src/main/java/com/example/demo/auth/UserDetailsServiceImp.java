@@ -12,7 +12,7 @@ import com.example.demo.repository.UserRepository;
 // 'UserDetailsService' is used by Spring to retrieve users informations.
 // it define a method 'loadUserByUsername()' that we override to customize the process to retrieve the users
 @Service
-public class CustomUserDetailImp implements UserDetailsService {
+public class UserDetailsServiceImp implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
