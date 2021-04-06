@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.CustomOrder;
+import com.example.demo.model.Status;
 import com.example.demo.repository.OrderRepository;
 
 @Service
@@ -16,7 +17,7 @@ public class CustomOrderService extends BaseCrudService<OrderRepository, CustomO
 		super(repository);
 	}
 	
-	public List<CustomOrder> findByEmployeeId(Long id) {
-		return repository.findByEmployeeId(id);
+	public List<CustomOrder> findByStatus(Status status) {
+		return repository.findByStatus(status);
 	}
 }

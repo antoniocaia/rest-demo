@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.mediatype.problem.Problem;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.CustomOrderNotFoundException;
 import com.example.demo.model.CustomOrder;
-import com.example.demo.model.Employee;
 import com.example.demo.model.Status;
 import com.example.demo.service.CustomOrderService;
 
@@ -26,10 +27,14 @@ public class CustomOrderController extends BaseCrudController<CustomOrderService
 		super(service);
 	}
 	
-	@GetMapping("/{id}/employee")
-	public Employee getCustomOrders(@PathVariable Long id) {
-		CustomOrder customOrder = service.findById(id).orElseThrow(() -> new CustomOrderNotFoundException(id));
-		return customOrder.getEmployee();
+	@GetMapping("/completed")
+	public List<CustomOrder> getColpetedOrders() {
+		return service.findByStatus(Status.COMPLETED);
+	}
+	
+	@GetMapping("/inprogress")
+	public List<CustomOrder> getInProgressOrders() {
+		return service.findByStatus(Status.IN_PROGRESS);
 	}
 	
 	@PutMapping("/{id}/complete")

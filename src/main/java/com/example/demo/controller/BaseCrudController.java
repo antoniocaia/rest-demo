@@ -15,6 +15,7 @@ import com.example.demo.model.IDModel;
 import com.example.demo.service.BaseCrudService;
 
 // TODO Ask warning -> SERVICE extends BaseCrudService<?,?,?>
+// TODO Rework controllers delete/post to satisfy entities relationship
 public abstract class BaseCrudController<SERVICE extends BaseCrudService<? extends JpaRepository<MODEL, ID>, MODEL, ID>, MODEL extends IDModel<ID>, ID>
 		implements ICrudController<MODEL, ID> {
 

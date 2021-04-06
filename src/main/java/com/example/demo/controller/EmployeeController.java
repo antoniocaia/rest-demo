@@ -19,7 +19,7 @@ import com.example.demo.service.EmployeeService;
 //Controller is used to tell Spring (?) that the annotated class contains method mapped to specific URI (using  @RequestMapping or @GetMapping, @PostMapping, etc)
 //@ResponseBody indicates that the data returned by each method will be written straight into the response body instead of rendering a template
 @RestController
-@RequestMapping("/api/v1/employees")
+@RequestMapping("/api/v1/employees") // TODO BUG: some mapping always require '/' at the end
 public class EmployeeController extends BaseCrudController<EmployeeService, Employee, Long> {
 	// I can remove the constructor and annotate this variable with @Autowired.
 	// But during unit testing it's useful to have a constructor to manually inject mocked dependencies. Wtd?
