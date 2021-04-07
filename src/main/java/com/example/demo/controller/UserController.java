@@ -18,7 +18,7 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(value = "/api/v1/users", produces = "application/json")
 public class UserController extends BaseCrudController<UserService, User, Long> {
 
 	@Autowired

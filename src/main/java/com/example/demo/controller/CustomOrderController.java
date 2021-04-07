@@ -20,7 +20,7 @@ import com.example.demo.model.Status;
 import com.example.demo.service.CustomOrderService;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping(value = "/api/v1/orders", produces = "application/json")
 public class CustomOrderController extends BaseCrudController<CustomOrderService, CustomOrder, Long> {
 
 	public CustomOrderController(CustomOrderService service) {

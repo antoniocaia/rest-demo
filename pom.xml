@@ -81,50 +81,33 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+		<!-- http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config  see .properties for configuration--> 
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.5.6</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<!-- Can produce/consume xml as well as json -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
 		<plugins>
-		<!-- Plugin to generate angular front-end -->
-		<!-- 
-			<plugin> 
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.9.1</version>
-				<configuration>
-					<nodeVersion>v14.16.0</nodeVersion>
-				</configuration>
-				<executions>
-					<execution>
-						<id>install-npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm-install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>npm-build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run-script build</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> 
-			 -->
+			<!-- Plugin to generate angular front-end -->
+			<!-- <plugin> <groupId>com.github.eirslett</groupId> <artifactId>frontend-maven-plugin</artifactId> 
+				<version>1.9.1</version> <configuration> <nodeVersion>v14.16.0</nodeVersion> 
+				</configuration> <executions> <execution> <id>install-npm</id> <goals> <goal>install-node-and-npm</goal> 
+				</goals> </execution> <execution> <id>npm-install</id> <goals> <goal>npm</goal> 
+				</goals> </execution> <execution> <id>npm-build</id> <goals> <goal>npm</goal> 
+				</goals> <configuration> <arguments>run-script build</arguments> </configuration> 
+				</execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
