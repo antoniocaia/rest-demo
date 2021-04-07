@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/fakeUnprotectedUri").permitAll()	// URLs white-list, no authentication required
 			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
 			.antMatchers(HttpMethod.POST, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
-			.antMatchers(HttpMethod.DELETE, "/api/v1/orders/**", "/api/v1/employees/**").hasAuthority(RoleEnum.USER.getRole())
+			.antMatchers(HttpMethod.DELETE, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
 			.antMatchers(HttpMethod.GET, "/api/v1/orders/**", "/api/v1/employees/**").hasAnyRole(RoleEnum.USER.getRole(), RoleEnum.WATCHER.getRole())
 			.antMatchers("/api/v1/users/**").hasRole(RoleEnum.ADMIN.getRole())
 			.anyRequest().authenticated().and().httpBasic() 
