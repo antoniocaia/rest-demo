@@ -39,9 +39,9 @@ public class LoadResourcesUserRole {
 			roleRepository.save(r);
 			roleRepository.save(w);
 			
-			User admin = new User("admin", passwordEncoder.encode("password"), new HashSet<Role>());
-			User user = new User("user", passwordEncoder.encode("test"), new HashSet<Role>());
-			User watcher = new User("watch", passwordEncoder.encode("pass"), new HashSet<Role>());
+			User admin = new User("admin", passwordEncoder.encode("password"), new HashSet<Role>(), false, false, true);
+			User user = new User("user", passwordEncoder.encode("test"), new HashSet<Role>(),  false, false, true);
+			User watcher = new User("watch", passwordEncoder.encode("pass"), new HashSet<Role>(),  false, false, true);
 			
 			admin.getRoles().add(ra);
 			admin.getRoles().add(w);
@@ -51,8 +51,7 @@ public class LoadResourcesUserRole {
 			user.getRoles().add(w);
 			watcher.getRoles().add(rw);
 			watcher.getRoles().add(r);
-			
-			
+
 			userRepository.save(admin);
 			userRepository.save(user);
 			userRepository.save(watcher);

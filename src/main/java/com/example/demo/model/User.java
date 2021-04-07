@@ -23,7 +23,13 @@ public class User extends IDModel<Long>{
 	private String username;
 	@Column(name = "PASSWORD")
 	private String password;
-	
+	@Column(name = "EXPIRED")
+	private boolean expired;
+	@Column(name = "LOCKED")
+	private boolean locked;
+	@Column(name = "ENABLED")
+	private boolean enabled;
+
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<Role> roles;
@@ -33,5 +39,15 @@ public class User extends IDModel<Long>{
 		this.username = username;
 		this.password = password;
 		this.roles = roles;
+	}
+	
+	public User(String username, String password, Set<Role> roles, boolean expired, boolean locked, boolean enabled) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+		this.expired = expired;
+		this.locked = locked;
+		this.enabled = enabled;
 	}
 }

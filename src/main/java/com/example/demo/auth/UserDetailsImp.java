@@ -39,14 +39,15 @@ public class UserDetailsImp implements UserDetails {
 	// the accounts in the db without conditions
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		return !user.isExpired();
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return !user.isLocked();
 	}
-
+	
+	// TODO guardare differenza tra credenziali expired e account expired
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
@@ -54,7 +55,7 @@ public class UserDetailsImp implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return user.isEnabled();
 	}
 
 }

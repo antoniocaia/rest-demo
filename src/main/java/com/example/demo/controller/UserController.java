@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,4 +49,14 @@ public class UserController extends BaseCrudController<UserService, User, Long> 
 		User user =  service.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 		return user.getRoles();
 	}
+	
+	// TODO Patch??? miglior approccio?
+	@PatchMapping("/{id}/lock/{lock}")
+	public User setLock(@PathVariable Long id, @PathVariable boolean lock) {
+		User user =  service.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+		user.setLocked(lock);
+		return service.update(user);
+	}
+	
+	// TODO Add controller for enabled and expired
 }
