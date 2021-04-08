@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.CustomOrder;
 import com.example.demo.model.Status;
-import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.CustomOrderRepository;
 
 @Service
-public class CustomOrderService extends BaseCrudService<OrderRepository, CustomOrder, Long> {
+public class CustomOrderService extends BaseCrudService<CustomOrderRepository, CustomOrder, Long> {
 
 	@Autowired
-	public CustomOrderService(OrderRepository repository) {
+	public CustomOrderService(CustomOrderRepository repository) {
 		super(repository);
 	}
 	

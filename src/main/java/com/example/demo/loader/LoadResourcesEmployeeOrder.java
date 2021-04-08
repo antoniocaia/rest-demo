@@ -9,7 +9,7 @@ import com.example.demo.model.CustomOrder;
 import com.example.demo.model.Employee;
 import com.example.demo.model.Status;
 import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.CustomOrderRepository;
 
 @Configuration
 public class LoadResourcesEmployeeOrder {
@@ -19,7 +19,7 @@ public class LoadResourcesEmployeeOrder {
 	// 2- The Bean will be of type 'CommandLineRunner', so a functional interface.
 	// 3- The Bean will be executed "automatically" after the application start
 	//@Bean // COMMENT BEAN IF YOU DON'T WANT TO POPULATE THE DB
-	CommandLineRunner initDatabaseEmployee(EmployeeRepository employeeRepository, OrderRepository orderRepository) {
+	CommandLineRunner initDatabaseEmployee(EmployeeRepository employeeRepository, CustomOrderRepository orderRepository) {
 		return args -> {
 
 			Employee bb = new Employee("Bilbo Baggins", "burglar", new HashSet<CustomOrder>());

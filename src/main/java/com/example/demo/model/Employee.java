@@ -39,9 +39,4 @@ public class Employee extends IDModel<Long> {
 		this.job = job;
 		this.orders = orders;
 	}
-
-	public Employee(String name, String job) {
-		this.name = name;
-		this.job = job;
-	}
 }
