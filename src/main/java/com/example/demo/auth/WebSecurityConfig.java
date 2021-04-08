@@ -1,24 +1,33 @@
 package com.example.demo.auth;
 
-import java.security.SecureRandom;
-
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.model.RoleEnum;
 
+// TODO Cercare come usare @PreAuthorize @RoleAllowed con enum. 
+// TODO Come usare @EnableGlobalMethodSecurity
+
 // https://www.marcobehler.com/guides/spring-security#_authentication_with_spring_security
+// @EnableGlobalMethodSecurity
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final int BCP_STRENGTH = 10; // Default value is 10
-	
-	// TODO Cercare come usare @PreAuthorize @RoleAllowed con enum
-	
+	// When implementing only one PasswordEncoder and UserDetailService we can avoid calling configureGlobal() and specify in the class the PE and UDS.
+	// this works when Spring see the @EnableWebSecurity automatically search for a PasswordEncoder bean and UserDetailService bean. 
+	@Autowired
+	@Qualifier("standardEncoder")
+	PasswordEncoder passwordEncoder;
+	@Autowired
+	UserDetailsService userDetailsService;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
@@ -35,11 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//@formatter:on
 	}
 
-	// We need to specify the hashing algorithm for the passwords
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		// We specify the algorithm "strength" (that result in 2^strength iterations) and the salting function
-		// https://docs.oracle.com/javase/6/docs/api/java/security/SecureRandom.html
-		return new BCryptPasswordEncoder(BCP_STRENGTH, new SecureRandom());
+	// See top comment
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	}
+
 }

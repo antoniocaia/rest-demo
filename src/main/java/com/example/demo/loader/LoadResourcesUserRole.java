@@ -3,6 +3,7 @@ package com.example.demo.loader;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import com.example.demo.repository.UserRepository;
 public class LoadResourcesUserRole {
 	
 	@Autowired
+	@Qualifier("standardEncoder")
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	// Indicates that a method produces a bean to be managed by the Spring container

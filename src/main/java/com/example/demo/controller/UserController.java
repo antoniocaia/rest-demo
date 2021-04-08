@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +24,7 @@ import com.example.demo.service.UserService;
 public class UserController extends BaseCrudController<UserService, User, Long> {
 
 	@Autowired
+	@Qualifier("standardEncoder")
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
