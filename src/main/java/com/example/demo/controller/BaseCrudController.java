@@ -14,19 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.model.IDModel;
 import com.example.demo.service.BaseCrudService;
 
-// TODO Ask warning -> SERVICE extends BaseCrudService<?,?,?>
 // TODO Rework controllers delete/post to satisfy entities relationship
 public abstract class BaseCrudController<SERVICE extends BaseCrudService<? extends JpaRepository<MODEL, ID>, MODEL, ID>, MODEL extends IDModel<ID>, ID>
+		extends AbstractController<SERVICE>
 		implements ICrudController<MODEL, ID> {
 
-	protected SERVICE service;
-	
 	public BaseCrudController(SERVICE service) {
 		this.service = service;
 	}
 	
 	@Override
-	@GetMapping("/")
+	@GetMapping("")
 	public List<MODEL> getAll() {
 		return service.findAll();
 	}
@@ -38,7 +36,7 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<? exten
 	}
 
 	@Override
-	@PostMapping("/")
+	@PostMapping("")
 	public MODEL add(@RequestBody MODEL model) {
 		return service.save(model);
 	}
@@ -56,7 +54,7 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<? exten
 	}
 
 	@Override
-	@DeleteMapping("/")
+	@DeleteMapping("")
 	public void deleteItem(@RequestBody MODEL model) {
 		service.delete(model);
 	}
