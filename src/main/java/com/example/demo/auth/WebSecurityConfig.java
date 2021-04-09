@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.model.RoleEnum;
 
-// TODO Cercare come usare @PreAuthorize @RoleAllowed con enum. 
+// TODO Cercare come usare @PreAuthorize @RoleAllowed con enum come parametro
 // TODO Come usare @EnableGlobalMethodSecurity
 
 // https://www.marcobehler.com/guides/spring-security#_authentication_with_spring_security
@@ -27,11 +27,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	UserDetailsService userDetailsService;
-
+	
+	// HttpBasic vs. FormLogin
+	// Basic Authentication doen't use cookies, so every http request mu	st send user and password
+	// Form-base Authentication use cookies to creates a session
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
-		http.csrf().disable()
+		http
+			//.csrf().disable() // csfr is needed when the client is a browser. Disable to send request form applications, like Postman
 			.authorizeRequests()
 			.antMatchers("/fakeUnprotectedUri").permitAll()	// URLs white-list, no authentication required
 			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
@@ -39,8 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.DELETE, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
 			.antMatchers(HttpMethod.GET, "/api/v1/orders/**", "/api/v1/employees/**").hasAnyRole(RoleEnum.USER.getRole(), RoleEnum.WATCHER.getRole())
 			.antMatchers("/api/v1/users/**").hasRole(RoleEnum.ADMIN.getRole())
-			.anyRequest().authenticated().and().httpBasic() 
-			.and().formLogin();	// Support for form login, generate one if not specified 
+			.anyRequest().authenticated()
+			//.and().httpBasic()  
+			.and().formLogin()
+			.and().rememberMe()
+			.and().logout()		// This is automatically applied when using WebSecurityConfigurerAdapter. Clean eventual rememberMe. 
+			.clearAuthentication(true)
+			.invalidateHttpSession(true);
 		//@formatter:on
 	}
 
