@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/api/v1/orders/**", "/api/v1/employees/**").hasAnyRole(RoleEnum.USER.getRole(), RoleEnum.WATCHER.getRole())
 			.antMatchers("/api/v1/users/**").hasRole(RoleEnum.ADMIN.getRole())
 			.anyRequest().authenticated()
-			//.and().httpBasic()  
+			.and().httpBasic()  // TODO DISABLE THIS LINE. I keep this enabled only for postman
 			.and().formLogin()
 			.and().rememberMe()
 			.and().logout()		// This is automatically applied when using WebSecurityConfigurerAdapter. Clean eventual rememberMe. 

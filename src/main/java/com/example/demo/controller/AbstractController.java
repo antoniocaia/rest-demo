@@ -9,7 +9,7 @@ import com.example.demo.service.IService;
 // This can useful if you have to implement different kind of controllers that don't use CRUD service
 
 public abstract class AbstractController <SERVICE extends IService> {
-	
+	//TODO let's use the logger!
 	protected final static Logger log = LoggerFactory.getLogger(AbstractController.class);
 	
 	protected SERVICE service;
