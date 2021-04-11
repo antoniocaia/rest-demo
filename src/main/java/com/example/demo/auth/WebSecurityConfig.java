@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.demo.jwt.JwtTokenValidationFilter;
+import com.example.demo.jwt.JwtUsernamePasswordFilter;
 import com.example.demo.model.RoleEnum;
 
 // TODO Cercare come usare @PreAuthorize @RoleAllowed con enum come parametro
@@ -29,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	UserDetailsService userDetailsService;
 	
 	// HttpBasic vs. FormLogin
-	// Basic Authentication doen't use cookies, so every http request mu	st send user and password
+	// Basic Authentication doen't use cookies, so every http request must send the user and password
 	// Form-base Authentication use cookies to creates a session
 	
 	@Override
@@ -37,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//@formatter:off
 		http
 			//.csrf().disable() // csfr is needed when the client is a browser. Disable to send request form applications, like Postman
+			.addFilter(new JwtUsernamePasswordFilter())
+			.addFilterAfter(new JwtTokenValidationFilter(),JwtUsernamePasswordFilter.class)
 			.authorizeRequests()
 			.antMatchers("/fakeUnprotectedUri").permitAll()	// URLs white-list, no authentication required
 			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
