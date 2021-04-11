@@ -2,6 +2,7 @@ package com.example.demo.jwt;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,9 @@ public class JwtTokenValidationFilter extends OncePerRequestFilter {
 
 	@Autowired
 	JwtSecretKey secretKey;
-
+	
+	// For each incoming HTTP request we check the header for a token, if the token is present we check if there are any sign of tempering.
+	// If the token is ok we take the information inside it and use them to authenticate the user
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -45,9 +48,9 @@ public class JwtTokenValidationFilter extends OncePerRequestFilter {
 
 				// At this point we can safely trust the JWT, so we can read the claims
 				String username = jws.getBody().getSubject();
-				Set<GrantedAuthority> authorities = ((Collection<String>) jws.getBody().get("roles"))	// TODO is the casting forced?
+				Set<GrantedAuthority> authorities = ((Collection<Map<String,String>>) jws.getBody().get("roles"))	// TODO is the casting forced?
 						.stream()
-						.map(role -> new SimpleGrantedAuthority(role))
+						.map(m -> new SimpleGrantedAuthority(m.get("roles")))
 						.collect(Collectors.toSet());
 
 				Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities); 
