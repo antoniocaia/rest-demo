@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/api/v1/orders/**", "/api/v1/employees/**").hasAnyRole(RoleEnum.USER.getRole(), RoleEnum.WATCHER.getRole())
 			.antMatchers("/api/v1/users/**").hasRole(RoleEnum.ADMIN.getRole())
 			.anyRequest().authenticated();
+			// All this code isn't necessary when we use JWT
 //			.and().httpBasic()  // TODO DISABLE THIS LINE. I keep this enabled only for postman
 //			.and().formLogin();
 //			.and().rememberMe()
