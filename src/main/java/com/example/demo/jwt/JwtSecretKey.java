@@ -2,18 +2,22 @@ package com.example.demo.jwt;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
-@Configuration
+@Component
 public class JwtSecretKey {
 
-	@Bean
-	public SecretKey getSecretKey() {
+	private SecretKey secretKey;
+
+	public JwtSecretKey() {
 		// Auto-generate the signing key for the specified algorithm
-		return Keys.secretKeyFor(SignatureAlgorithm.HS512); // Length of the key determinate the algorithm that will be used
+		secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512); // Length of the key determinate the algorithm that will be used
+	}
+
+	public SecretKey getSecretKey() {
+		return secretKey;
 	}
 }
