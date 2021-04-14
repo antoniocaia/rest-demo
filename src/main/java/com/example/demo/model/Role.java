@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +17,10 @@ import lombok.Setter;
 @Entity @Table(name = "ROLES")
 @NoArgsConstructor 
 @Setter @Getter 
+@EqualsAndHashCode(callSuper = false)
 public class Role extends IDModel<Long>{
-	@Column(name = "ROLE")
+	
+	@Column(name = "ROLE", nullable = false)
 	private String role;
 	@Column(name = "DESCRIPTION")
 	private String description;
