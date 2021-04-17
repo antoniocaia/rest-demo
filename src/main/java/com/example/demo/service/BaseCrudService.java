@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.IDModel;
@@ -23,6 +25,11 @@ public abstract class BaseCrudService<REPO extends JpaRepository<MODEL, ID>, MOD
 	@Override
 	public List<MODEL> findAll() {
 		return repository.findAll();
+	}
+	
+	@Override
+	public Page<MODEL> findAll(Pageable page) {
+		return repository.findAll(page);
 	}
 
 	@Override

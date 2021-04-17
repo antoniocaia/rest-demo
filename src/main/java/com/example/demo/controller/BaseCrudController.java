@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,13 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<? exten
 	@GetMapping("")
 	public List<MODEL> getAll() {
 		return service.findAll();
+	}
+	
+	// To use Pageable, pass the arguments with the URL, like: "/page/?page=0&sort=id,desc"
+	@Override
+	@GetMapping("/page")
+	public Page<MODEL> getAll(Pageable page) {
+		return service.findAll(page);
 	}
 
 	@Override
