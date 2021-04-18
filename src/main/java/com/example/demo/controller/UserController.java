@@ -33,7 +33,7 @@ public class UserController extends BaseCrudController<UserService, User, Long> 
 	}
 	
 	@Override
-	@PostMapping("/")
+	@PostMapping("")
 	public User add(@RequestBody User newUser) {
 		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		return service.save(newUser);

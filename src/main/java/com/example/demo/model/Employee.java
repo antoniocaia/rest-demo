@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -25,7 +26,7 @@ public class Employee extends IDModel<Long> {
 	// Furthermore, the "many" entity ('Order' class) should have a @ManyToOne annotation without 'mappedBy'
 	// https://www.baeldung.com/hibernate-one-to-many
 	@JsonIgnore
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.MERGE)
 	private Set<CustomOrder> orders;
 
 	// Used to add a relationship between Order and Employee
