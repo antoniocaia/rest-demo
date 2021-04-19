@@ -14,7 +14,7 @@ import com.example.demo.repository.CustomOrderRepository;
 import com.example.demo.repository.EmployeeRepository;
 
 @Configuration
-@Profile("test") // This is configured in .properties
+@Profile({"test", "dev"}) // This is configured in .properties
 public class LoadResourcesEmployeeOrder {
 
 	// CommandLineRunner is an functional interface used to indicate that a bean should run.

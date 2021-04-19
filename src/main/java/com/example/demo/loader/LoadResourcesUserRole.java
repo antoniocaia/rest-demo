@@ -16,7 +16,7 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 
 @Configuration
-@Profile("test")
+@Profile({"test", "dev"})
 public class LoadResourcesUserRole {
 	
 	@Autowired
