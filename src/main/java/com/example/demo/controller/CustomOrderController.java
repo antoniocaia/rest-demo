@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.exception.CustomOrderNotFoundException;
 import com.example.demo.model.CustomOrder;
 import com.example.demo.model.Status;
+import com.example.demo.repository.CustomOrderRepository;
 import com.example.demo.service.CustomOrderService;
 
 @RestController
 @RequestMapping("/api/v1/orders")
-public class CustomOrderController extends BaseCrudController<CustomOrderService, CustomOrder, Long> {
+public class CustomOrderController extends BaseCrudController<CustomOrderService, CustomOrderRepository, CustomOrder, Long> {
 
 	public CustomOrderController(CustomOrderService service) {
 		super(service);

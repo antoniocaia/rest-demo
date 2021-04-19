@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserController extends BaseCrudController<UserService, User, Long> {
+public class UserController extends BaseCrudController<UserService, UserRepository, User, Long> {
 
 	@Autowired
 	@Qualifier("standardEncoder")

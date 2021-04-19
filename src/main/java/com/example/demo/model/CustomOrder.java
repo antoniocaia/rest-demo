@@ -3,7 +3,6 @@ package com.example.demo.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -24,7 +23,6 @@ public class CustomOrder extends IDModel<Long>{
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JsonIgnore
-	@JoinColumn(name = "EMPLOYEE_ID", nullable = false)
 	private Employee employee;
 
 	public CustomOrder(String description, Status status, Employee employee) {

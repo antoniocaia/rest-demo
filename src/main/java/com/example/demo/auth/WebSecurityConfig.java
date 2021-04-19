@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http
-			//.csrf().disable() // csfr is needed when the client is a browser. Disable to send request form applications, like Postman
+			.csrf().disable() // csfr is needed when the client is a browser. Disable to send request form applications, like Postman
 			.authorizeRequests()
 			.antMatchers("/fakeUnprotectedUri").permitAll()	// URLs white-list, no authentication required
 			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())

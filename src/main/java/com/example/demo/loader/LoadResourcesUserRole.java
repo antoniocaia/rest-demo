@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import com.example.demo.model.UserDetails;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 
@@ -53,7 +54,9 @@ public class LoadResourcesUserRole {
 			//user.getRoles().add(w);
 			watcher.getRoles().add(rw);
 			//watcher.getRoles().add(r);
-
+			
+			admin.setUserDetails(new UserDetails("Mario", "Rossi"));
+			
 			userRepository.save(admin);
 			userRepository.save(user);
 			userRepository.save(watcher);
