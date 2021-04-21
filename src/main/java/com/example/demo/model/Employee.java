@@ -29,16 +29,19 @@ public class Employee extends IDModel<Long> {
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.MERGE)
 	private Set<CustomOrder> orders;
 
-//	// Used to add a relationship between Order and Employee. TODO correct?
-//	public Employee(Long id) {
-//		setId(id);
-//	}
-
+	
 	// Used inside the loader
 	public Employee(String name, String job, Set<CustomOrder> orders) {
 		super();
 		this.name = name;
 		this.job = job;
 		this.orders = orders;
+	}
+	
+	// For testing ...
+	public Employee(long id, String name, String job) {
+		this.id = id;
+		this.name = name;
+		this.job = job;
 	}
 }

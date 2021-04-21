@@ -57,6 +57,7 @@ public class User extends IDModel<Long>{
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
 	private Set<Role> roles;
 	
+	@JsonIgnore
 	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST })
 	private UserDetails userDetails;
 	
