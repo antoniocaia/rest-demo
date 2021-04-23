@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,11 @@ import com.example.demo.model.IDModel;
 import com.example.demo.service.BaseCrudService;
 
 // TODO Rework controllers delete/post to satisfy entities relationship
-public abstract class BaseCrudController<SERVICE extends BaseCrudService<? extends JpaRepository<MODEL, ID>, MODEL, ID>, MODEL extends IDModel<ID>, ID>
+public abstract class BaseCrudController<
+		SERVICE extends BaseCrudService<REPOSITORY, MODEL, ID>, 
+		REPOSITORY extends JpaRepository<MODEL, ID>,
+		MODEL extends IDModel<ID>, 
+		ID>
 		extends AbstractController<SERVICE>
 		implements ICrudController<MODEL, ID> {
 
@@ -27,6 +33,13 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<? exten
 	@GetMapping("")
 	public List<MODEL> getAll() {
 		return service.findAll();
+	}
+	
+	// To use Pageable, pass the arguments with the URL, like: "/page/?page=0&sort=id,desc"
+	@Override
+	@GetMapping("/page")
+	public Page<MODEL> getAll(Pageable page) {
+		return service.findAll(page);
 	}
 
 	@Override
