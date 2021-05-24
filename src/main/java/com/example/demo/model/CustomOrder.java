@@ -33,8 +33,7 @@ public class CustomOrder extends IDModel<Long>{
 	}
 	
 	// TODO having a constructor only for test is bad practice 
-	public CustomOrder(Long id, String description, Status status) {
-		super.setId(id);
+	public CustomOrder(String description, Status status) {
 		this.description = description;
 		this.status = status;
 	}

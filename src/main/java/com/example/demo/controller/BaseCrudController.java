@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.model.IDModel;
 import com.example.demo.service.BaseCrudService;
 
-// TODO Rework controllers delete/post to satisfy entities relationship
 public abstract class BaseCrudController<
 		SERVICE extends BaseCrudService<REPOSITORY, MODEL, ID>, 
 		REPOSITORY extends JpaRepository<MODEL, ID>,
