@@ -71,6 +71,4 @@ public class CustomOrderController extends BaseCrudController<CustomOrderService
 				.body(Problem.create().withTitle("Method not allowed")
 						.withDetail("You can't cancel an order that is in the " + customOrder.getStatus() + " status"));
 	}
-	
-	//TODO Override dell'inserimento affinchè ci sia sempre un employee associato ad un ordine 
 }

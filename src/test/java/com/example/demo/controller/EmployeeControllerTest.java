@@ -42,22 +42,18 @@ public class EmployeeControllerTest {
 	@WithMockUser(username = "user", password = "test", roles = "USER")
 	public void getCustomOrdersTest() throws Exception {
 		final Long empId = 0L;
-		final Long ordId1 = 0L;
-		final Long ordId2 = 1L;
+		final Long ordId = 0L;
 
 		Set<CustomOrder> orderSet = new HashSet<>();
-		CustomOrder customOrder1 = new CustomOrder(ordId1, "myDescription", Status.COMPLETED);
-		CustomOrder customOrder2 = new CustomOrder(ordId2, "myDesc", Status.IN_PROGRESS);
+		CustomOrder customOrder1 = new CustomOrder("myDescription", Status.COMPLETED);
+		CustomOrder customOrder2 = new CustomOrder("myDesc", Status.IN_PROGRESS);
 		orderSet.add(customOrder1);
 		orderSet.add(customOrder2);
 
 		when(service.findById(empId)).thenReturn(Optional.of(new Employee("myName", "myJob", orderSet)));
-
-		this.mockMvc.perform(get("/api/v1/employees/" + empId + "/order/" + ordId1)).andDo(print())
+		this.mockMvc.perform(get("/api/v1/employees/" + empId + "/order/" + ordId)).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				// .andExpect(jsonPath("$.id", is(customOrder.getId()))) // TODO check this assertion
-				.andExpect(jsonPath("$.id", is(Math.toIntExact(customOrder1.getId()))))
 				.andExpect(jsonPath("$.description", is(customOrder1.getDescription())))
 				.andExpect(jsonPath("$.status", is(customOrder1.getStatus().toString())));
 	}

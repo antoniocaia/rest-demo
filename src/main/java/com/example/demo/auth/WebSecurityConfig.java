@@ -12,8 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.model.RoleEnum;
 
-// TODO Cercare come usare @PreAuthorize @RoleAllowed con enum come parametro
-// TODO Come usare @EnableGlobalMethodSecurity
+// TODO Cercare come usare @PreAuthorize @RoleAllowed con enum come parametro e come usare @EnableGlobalMethodSecurity
 
 // https://www.marcobehler.com/guides/spring-security#_authentication_with_spring_security
 // @EnableGlobalMethodSecurity
@@ -36,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http
-			.csrf().disable() // csfr is needed when the client is a browser. Disable to send request form applications, like Postman
+			.csrf().disable() // ENABLE THIS LINE. Csfr is needed when the client is a browser. Disable to send request form applications, like Postman.
 			.authorizeRequests()
 			.antMatchers("/fakeUnprotectedUri").permitAll()	// URLs white-list, no authentication required
 			.antMatchers(HttpMethod.PUT, "/api/v1/orders/**", "/api/v1/employees/**").hasRole(RoleEnum.USER.getRole())
@@ -45,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/api/v1/orders/**", "/api/v1/employees/**").hasAnyRole(RoleEnum.USER.getRole(), RoleEnum.WATCHER.getRole())
 			.antMatchers("/api/v1/users/**").hasRole(RoleEnum.ADMIN.getRole())
 			.anyRequest().authenticated()
-			.and().httpBasic()  // TODO DISABLE THIS LINE. I keep this enabled only for postman
+			.and().httpBasic()  // DISABLE THIS LINE. I keep this enabled only for postman, to test the API.
 			.and().formLogin()
 			.and().rememberMe()
 			.and().logout()		// This is automatically applied when using WebSecurityConfigurerAdapter. Clean eventual rememberMe. 

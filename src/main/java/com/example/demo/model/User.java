@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// TODO check if I wan't to keep ID in IDModel or not
 // When comparing instances, we don't want to take in consideration the ID (unique value), because it really doesn't "describe" the instance.
 // Unfortunately, equals is used during authentication process, and it needs the complete equals that use the id too.
 //@EqualsAndHashCode // Can't us it
