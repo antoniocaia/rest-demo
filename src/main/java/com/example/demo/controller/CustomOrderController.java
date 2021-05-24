@@ -2,9 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.mediatype.problem.Problem;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,22 +19,23 @@ import com.example.demo.service.CustomOrderService;
 
 @RestController
 @RequestMapping("/api/v1/orders")
-public class CustomOrderController extends BaseCrudController<CustomOrderService, CustomOrderRepository, CustomOrder, Long> {
+public class CustomOrderController
+		extends BaseCrudController<CustomOrderService, CustomOrderRepository, CustomOrder, Long> {
 
 	public CustomOrderController(CustomOrderService service) {
 		super(service);
 	}
-	
+
 	@GetMapping("/completed")
 	public List<CustomOrder> getColpetedOrders() {
 		return service.findByStatus(Status.COMPLETED);
 	}
-	
+
 	@GetMapping("/inprogress")
 	public List<CustomOrder> getInProgressOrders() {
 		return service.findByStatus(Status.IN_PROGRESS);
 	}
-	
+
 	@PutMapping("/{id}/complete")
 	public ResponseEntity<?> completeOrder(@PathVariable Long id) {
 		CustomOrder order = service.findById(id).orElseThrow(() -> new CustomOrderNotFoundException(id));
@@ -52,9 +50,7 @@ public class CustomOrderController extends BaseCrudController<CustomOrderService
 		// If the Order current status isn't IN_PROGRESS, 'complete' isn't an allowed operation
 		// The Order status isn't changed and a response 405 is sent to the client
 		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
-				.header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
-				.body(Problem.create().withTitle("Method not allowed")
-						.withDetail("You can't complete an order that is in the " + order.getStatus() + " status"));
+				.body("You can't complete an order that is in the " + order.getStatus() + " status");
 	}
 
 	@DeleteMapping("/{id}/cancel")
@@ -67,8 +63,6 @@ public class CustomOrderController extends BaseCrudController<CustomOrderService
 		}
 
 		return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
-				.header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
-				.body(Problem.create().withTitle("Method not allowed")
-						.withDetail("You can't cancel an order that is in the " + customOrder.getStatus() + " status"));
+				.body("You can't cancel an order that is in the " + customOrder.getStatus() + " status");
 	}
 }

@@ -1,7 +1,6 @@
 package com.example.demo.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,8 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// When implementing only one PasswordEncoder and UserDetailService we can avoid calling configureGlobal() and specify in the class the PE and UDS.
 	// this works when Spring see the @EnableWebSecurity automatically search for a PasswordEncoder bean and UserDetailService bean. 
+	//@Qualifier("standardEncoder")
 	@Autowired
-	@Qualifier("standardEncoder")
 	PasswordEncoder passwordEncoder;
 	@Autowired
 	UserDetailsService userDetailsService;
