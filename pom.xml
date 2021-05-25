@@ -46,7 +46,7 @@
 			<version>8.0.25</version>
 		</dependency>
 		<!-- Hibernate H2 -->
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->	
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -69,7 +69,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
-		<!-- http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config	see .properties for configuration -->
+		<!-- http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config 
+			see .properties for configuration -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
@@ -152,6 +153,15 @@
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
 		</dependency>
+
+		<!-- Need this for github action -->
+		<!-- https://mvnrepository.com/artifact/com.cedarsoftware/java-util -->
+		<dependency>
+			<groupId>com.cedarsoftware</groupId>
+			<artifactId>java-util</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
