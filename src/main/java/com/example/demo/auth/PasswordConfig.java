@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordConfig {
 	
 	private static final int BCP_STRENGTH = 10; // Default value is 10
-	private static final int BCP_SUPER_STRENGTH = 16; // Default value is 10
+	//private static final int BCP_SUPER_STRENGTH = 16; // Default value is 10
 
 	// We need to specify the hashing algorithm for the passwords
 	@Bean("standardEncoder")
@@ -21,8 +21,8 @@ public class PasswordConfig {
 	}
 
 	// Educational purpose only!
-	@Bean("strongEncoder")
-	public BCryptPasswordEncoder superStrongPasswordEncoder() {
-		return new BCryptPasswordEncoder(BCP_SUPER_STRENGTH, new SecureRandom());
-	}
+	//	@Bean("strongEncoder")
+	//	public BCryptPasswordEncoder superStrongPasswordEncoder() {
+	//		return new BCryptPasswordEncoder(BCP_SUPER_STRENGTH, new SecureRandom());
+	//	}
 }
