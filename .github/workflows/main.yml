@@ -11,10 +11,9 @@ on:
     - main
 
 jobs:
+  # Test
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -25,7 +24,14 @@ jobs:
         distribution: 'adopt'
     - name: Run tests with Maven
       run: mvn test
+  
+  push:
+    if: ${{ github.ref == 'main' }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Login to DockerHub
+      if: ${{ github.ref == 'main' }}
       uses: docker/login-action@v1 
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -37,7 +43,6 @@ jobs:
       run: docker build -t antoniocaia/restdemo . -f src/main/docker/backend/Dockerfile
     - name: Push 
       run: docker push antoniocaia/restdemo:latest 
-   
    
 #   - name: Build and Push to Docker Hub
 #      uses: docker/build-push-action@v2
