@@ -34,9 +34,9 @@ jobs:
     - name: Setup to build backend
       run: mvn clean package
     - name: Build backedn
-      run: docker build -t rest-demo/backend . -f src/main/docker/backend/Dockerfile
+      run: docker build -t antoniocaia/restdemo . -f src/main/docker/backend/Dockerfile
     - name: Push 
-      run: docker push rest-demo/backend 
+      run: docker push antoniocaia/restdemo:latest 
    
    
 #   - name: Build and Push to Docker Hub
