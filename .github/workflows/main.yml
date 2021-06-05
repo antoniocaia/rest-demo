@@ -12,7 +12,7 @@ on:
 
 jobs:
   # Test
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repository
@@ -27,26 +27,27 @@ jobs:
   
   push:
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
+    # Check repo, set-up env 
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Setup to build backend
+      run: mvn clean package
+    # Dockerhub login, docker build and push  
     - name: Login to DockerHub
-      if: ${{ github.ref == 'main' }}
       uses: docker/login-action@v1 
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: Setup to build backend
-      run: mvn clean package
     - name: Build backedn
       run: docker build -t antoniocaia/restdemo . -f src/main/docker/backend/Dockerfile
     - name: Push 
       run: docker push antoniocaia/restdemo:latest 
    
-#   - name: Build and Push to Docker Hub
-#      uses: docker/build-push-action@v2
-#      with:
-#        file: src/main/docker/backend/Dockerfile
-#        push: true
-#        tags: antoniocaia/restdemo:latest
