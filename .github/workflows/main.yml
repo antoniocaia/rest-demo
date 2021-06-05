@@ -34,7 +34,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        #tags: my-docker-hub-namespace/my-docker-hub-repository:latest
+        tags: antoniocaia/restdemo:latest
 
 #    - name: Build 
 #      run: docker build -t rest-demo/backend . -f src/main/docker/backend/Dockerfile
